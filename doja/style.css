@@ -1,3 +1,6 @@
+:root {
+  --animation-duration: 7400ms;
+}
 html,
 body {
   height: 100%;
@@ -17,6 +20,13 @@ body {
   height: 100%;
   text-align: center;
   /* display: none; */
+  animation-direction: alternate;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.hero.animate {
+  animation-name: hover;
 }
 
 h1 {
@@ -56,6 +66,13 @@ h1:last-child::before {
   justify-content: space-between;
   width: 130%;
   transform: translateX(-20%);
+}
+
+@keyframes hover {
+  to {
+    transform: translate(-50%, -50%) scale(0.975);
+    /* transform-origin: center; */
+  }
 }
 
 h2 {
