@@ -1,4 +1,6 @@
 :root {
+  /* must be in ms */
+  /* how much time in a measure */
   --animation-duration: 7400ms;
 }
 html,
@@ -9,6 +11,9 @@ body {
   background-color: maroon;
 }
 
+#upload, #audio {
+  display: none;
+}
 .hero {
   position: absolute;
   top: 50%;
