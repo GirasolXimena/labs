@@ -1,0 +1,29 @@
+:root {
+  /* must be in ms */
+  /* how much time in a measure */
+  --animation-duration: 7400ms;
+}
+canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  
+}
+input, audio {
+  display: none;
+}
+
+body {
+  background-color: rebeccapurple;
+  /* background-size: 50%; */
+  /* background-repeat: no-repeat; */
+  /* background-position: center; */
+
+}
