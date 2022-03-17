@@ -43,30 +43,51 @@ function draw() {
     fill(255, 255, 255, brightness)
     arc(randomX, randomY, starWidth, starHeight, 0, 2 * TAU)
   }
-  for (let i = 0; i < 180; i++) {
-    const beamWidth = random(1, 18)
-    const beamHeight = random(height / 6, height / 3)
+  for (let i = 0; i <= 32; i++) {
+    const beamWidth = random(20, 40)
+    const beamHeight = random(height / 8, height / 2)
     push()
     translate(width / 2, height / 2)
     noStroke()
-    rotate(randomGaussian(i, i / 2))
+    rotate(i * PI / 32)
     fill('white')
-    for (let j = beamWidth; j > 0; j--) {
-      const alpha = (beamWidth - j) / beamWidth * 25
+    for (let j = 1; j <= beamWidth; j += 3) {
+      const alpha = j / beamWidth * 255 / 2
+      console.log('a', alpha)
       let from = color(255, 69, 0, alpha);
       let to = color(255, 255, 0, alpha);
       fill(from)
-      arc(0, beamHeight / 2, randomGaussian(j, j * 4), beamHeight, 0, TAU)
-      fill(to)
-      arc(0, 0, j, beamHeight * 3 / 4, 0, TAU)
+      arc(beamHeight - beamHeight / 2, 0, beamHeight - j * 2, beamWidth - j, 0, TAU)
     }
 
     pop()
 
   }
-  for (let i = 100; i > 0; i--) {
+  for (let i = 0; i <= 32; i++) {
+    const beamWidth = random(5, 10)
+    const beamHeight = random(height / 16, height / 3)
+    push()
+    translate(width / 2, height / 2)
+    noStroke()
+    rotate(i * PI / 32)
+    fill('white')
+    for (let j = 1; j <= beamWidth; j += 3) {
+      const alpha = j / beamWidth * 255 / 2
+      console.log('a', alpha)
+      let from = color(255, 69, 0, alpha);
+      let to = color(255, 255, 0, alpha);
+      fill(to)
+      arc(0, 0, 2, beamHeight, 0, TAU)
+
+      // }
+    }
+
+    pop()
+
+  }
+  for (let i = 10; i > 0; i--) {
     const alpha = (10 - i) / 10 * 25
-    console.log(alpha)
+    // console.log(alpha)
     push()
     let from = color(255, 255, 0, alpha);
     let to = color(255, 255, 255, alpha);
