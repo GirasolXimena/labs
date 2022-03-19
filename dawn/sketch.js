@@ -53,7 +53,6 @@ function draw() {
     fill('white')
     for (let j = 1; j <= beamWidth; j += 3) {
       const alpha = j / beamWidth * 255 / 2
-      console.log('a', alpha)
       let from = color(255, 69, 0, alpha);
       let to = color(255, 255, 0, alpha);
       fill(from)
@@ -73,7 +72,6 @@ function draw() {
     fill('white')
     for (let j = 1; j <= beamWidth; j += 3) {
       const alpha = j / beamWidth * 255 / 2
-      console.log('a', alpha)
       let from = color(255, 69, 0, alpha);
       let to = color(255, 255, 0, alpha);
       fill(to)
@@ -87,7 +85,6 @@ function draw() {
   }
   for (let i = 10; i > 0; i--) {
     const alpha = (10 - i) / 10 * 25
-    // console.log(alpha)
     push()
     let from = color(255, 255, 0, alpha);
     let to = color(255, 255, 255, alpha);
