@@ -1,39 +1,55 @@
+const copies = 4;
+
+// how close together sine waves will be
+const frequency = 1 / 600;
+// how tall sine waves will be
+const amplitude = 1.5;
+// how many times per second animation will run
+const fps = 60;
+
+let now = 0;
+
+function createGradients(context) {
+  const g1 = context.createLinearGradient(450, 0, 950, 0);
+  const g2 = context.createLinearGradient(450, 0, 950, 0);
+  const blue = 'rgb(1, 187, 235)';
+  const yellow = 'rgb(221, 206, 3)';
+  const red = 'rgb(241, 126, 177)';
+  const stop = 0.3
+  const stop2 = 0.46
+  g1.addColorStop(0, blue);
+  g1.addColorStop(stop, yellow);
+  g1.addColorStop(stop2, yellow);
+  g1.addColorStop(1, red);
+  g2.addColorStop(0, red);
+  g2.addColorStop(stop, yellow);
+  g2.addColorStop(stop2, yellow);
+  g2.addColorStop(1, blue);
+  return { g1, g2 };
+}
+
+function createContextBaseProperties(context) {
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.font = "bold 72px Tomorrow";
+  context.lineWidth = 4;
+  context.strokeStyle = "rgba(40,40,40, 0.9)";
+}
+
+function createCanvasBaseProperties(canvas) {
+  const { clientWidth, clientHeight } = document.body;
+  canvas.height = clientHeight;
+  canvas.width = clientWidth;
+}
+
+const getVal = function (offset = 0, frequency, amplitude) {
+  // const now = Date.now()
+  return Math.sin((now + offset) * frequency) * amplitude;
+};
+
 function onReady() {
   console.log("ready");
-  //   start updating after it loads
-  function createGradients(context) {
-    const g1 = context.createLinearGradient(450, 0, 950, 0);
-    const g2 = context.createLinearGradient(450, 0, 950, 0);
-    const blue = 'rgb(1, 187, 235)';
-    const yellow = 'rgb(221, 206, 3)';
-    const red = 'rgb(241, 126, 177)';
-    const stop = 0.3
-    const stop2 = 0.46
-    g1.addColorStop(0, blue);
-    g1.addColorStop(stop, yellow);
-    g1.addColorStop(stop2, yellow);
-    g1.addColorStop(1, red);
-    g2.addColorStop(0, red);
-    g2.addColorStop(stop, yellow);
-    g2.addColorStop(stop2, yellow);
-    g2.addColorStop(1, blue);
-    return { g1, g2 };
-  }
 
-  function createContextBaseProperties(context) {
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    context.font = "bold 72px Arial";
-    context.lineWidth = 4;
-    context.strokeStyle = "rgba(40,40,40, 0.9)";
-
-  }
-
-  function createCanvasBaseProperties() {
-    const { clientWidth, clientHeight } = document.body;
-    canvas.height = clientHeight;
-    canvas.width = clientWidth;
-  }
 
   const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
@@ -44,29 +60,14 @@ function onReady() {
   const author = document.getElementById("author");
   const authorLines = author.textContent.trim().split(" ");
 
-  const copies = 4;
-
-  // how close together sine waves will be
-  const frequency = 1 / 600;
-  // how tall sine waves will be
-  const amplitude = 1.5;
-  // how many times per second animation will run
-  const fps = 60;
-
-  let now = 0;
   createCanvasBaseProperties(canvas);
   createContextBaseProperties(context);
   const { g1, g2 } = createGradients(context);
 
-  // number of times text is copied
-  const getVal = function (offset = 0, frequency, amplitude) {
-    // const now = Date.now()
-    return Math.sin((now + offset) * frequency) * amplitude;
-  };
 
 
-  const drawLetters = function (letters, yOffset = 0, xOffset = 0, comma, layer) {
-    letters.forEach(function (letter, index, array) {
+  function drawLetters (letters, yOffset = 0, xOffset = 0, comma, layer) {
+    return letters.forEach((letter, index, array) => {
       //       ms
       /** 
           val is the sin of time
@@ -84,8 +85,7 @@ function onReady() {
         time = index * delay;
       }
 
-      time += (300 * layer);
-      // console.table({ layer, delay, letter, letters, yOffset, xOffset })
+      time += (320 * layer);
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
       const halfWordWidth = wordWidth.width / 2;
@@ -102,8 +102,8 @@ function onReady() {
       context.fillText(letter, x + xOffset, y);
       context.strokeText(letter, x + xOffset, y);
       if (comma && letter === "W") {
-        context.fillText(",", x + halfLetterWidth, y);
-        context.strokeText(",", x + halfLetterWidth, y);
+        context.fillText(",", x + halfLetterWidth * 1.5, y);
+        context.strokeText(",", x + halfLetterWidth * 1.5, y);
       }
     });
   };
