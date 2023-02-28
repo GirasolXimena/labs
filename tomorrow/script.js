@@ -41,19 +41,20 @@ function onReady() {
 
   // how close together sine waves will be
   const frequency = 1 / 400;
-  // how tall sin waves will be
-  const amplitude = 16;
+  // how tall sine waves will be
+  const amplitude = 32;
   // how many times per second animation will run
   const fps = 24;
 
+  let now = 0;
   createCanvasBaseProperties(canvas);
   createContextBaseProperties(context);
   const { g1, g2 } = createGradients(context);
 
   // number of times text is copied
   const getVal = function (offset = 0, frequency, amplitude) {
-    const now = Date.now();
-    return Math.sin((now + offset) * frequency) * amplitude;
+    // const now = Date.now()
+    return Math.sin((now + offset) * frequency) * amplitude / 4;
   };
 
 
@@ -64,7 +65,7 @@ function onReady() {
           val is the sin of time
         */
       letter = letter.toUpperCase();
-      const delay = 300 + (15 * layer);
+      const delay = 300;
       //       get position for now for each interval
       //       each letter is 1.5 seconds behind the next
       let time;
@@ -74,6 +75,9 @@ function onReady() {
       } else {
         time = index * delay;
       }
+
+      time += (120 * layer);
+      // console.table({ layer, delay, letter, letters, yOffset, xOffset })
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
       const halfWordWidth = wordWidth.width / 2;
@@ -141,6 +145,7 @@ function onReady() {
   }
 
   const update = function () {
+    now = Date.now();
     draw();
     doFramesPerSecond(fps, update);
   };
