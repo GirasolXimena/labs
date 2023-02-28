@@ -57,17 +57,18 @@ function onReady() {
   };
 
 
-  const drawLetters = function (letters, yOffset = 0, xOffset = 0, comma) {
+  const drawLetters = function (letters, yOffset = 0, xOffset = 0, comma, layer) {
     letters.forEach(function (letter, index, array) {
       //       ms
       /** 
           val is the sin of time
         */
       letter = letter.toUpperCase();
-      const delay = 300;
+      const delay = 300 + (15 * layer);
       //       get position for now for each interval
       //       each letter is 1.5 seconds behind the next
       let time;
+      // AND needs to be offset to go to middle
       if (array.length < 7) {
         time = (index + 2.75) * delay;
       } else {
@@ -93,9 +94,10 @@ function onReady() {
       }
     });
   };
+
   const draw = function () {
-    const drawWord = function (letters, yOffset = 0, xOffset = 0, comma) {
-      drawLetters(letters, yOffset, xOffset, comma);
+    const drawWord = function (letters, yOffset = 0, xOffset = 0, comma, layer) {
+      drawLetters(letters, yOffset, xOffset, comma, layer);
     };
 
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,7 +114,9 @@ function onReady() {
       }
       //     index * 4 pixel stagger
       //     4, 8, 12, 16 pixels respectively
-      const yOffset = i * 4;
+      // const yOffset = i * 4;
+      const yOffset = 0;
+      const layer = i;
       titleLines.forEach(function (line, index) {
         let comma;
         if (index !== 4) {
@@ -121,11 +125,12 @@ function onReady() {
         const lineOffset = yOffset * index * -3;
         const letters = line.split("");
 
-        drawWord(letters, yOffset - index * 84, i * 4, comma);
+        drawWord(letters, yOffset - index * 84, i * 4, comma, layer);
       });
       authorLines.forEach(function (line, index, array) {
         const letters = line.split("");
-        drawWord(letters, -500 - yOffset - index * 100, i * 4, true);
+        const comma = true;
+        drawWord(letters, -500 - yOffset - index * 100, i * 4, comma, layer);
       });
     }
   };
