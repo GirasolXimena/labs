@@ -155,7 +155,8 @@ function onReady() {
   }
 
   const update = function () {
-    now = Date.now();
+    // now = Date.now();
+    now += fps / 2;
     draw();
     doFramesPerSecond(fps, update);
   };
