@@ -4,14 +4,19 @@ function onReady() {
   function createGradients(context) {
     const g1 = context.createLinearGradient(450, 0, 950, 0);
     const g2 = context.createLinearGradient(450, 0, 950, 0);
-    g1.addColorStop(0, "blue");
-    g1.addColorStop(0.4, "yellow");
-    g1.addColorStop(0.6, "yellow");
-    g1.addColorStop(1, "red");
-    g2.addColorStop(0, "red");
-    g2.addColorStop(0.4, "yellow");
-    g2.addColorStop(0.6, "yellow");
-    g2.addColorStop(1, "blue");
+    const blue = 'rgb(1, 187, 235)';
+    const yellow = 'rgb(221, 206, 3)';
+    const red = 'rgb(241, 126, 177)';
+    const stop = 0.3
+    const stop2 = 0.46
+    g1.addColorStop(0, blue);
+    g1.addColorStop(stop, yellow);
+    g1.addColorStop(stop2, yellow);
+    g1.addColorStop(1, red);
+    g2.addColorStop(0, red);
+    g2.addColorStop(stop, yellow);
+    g2.addColorStop(stop2, yellow);
+    g2.addColorStop(1, blue);
     return { g1, g2 };
   }
 
@@ -76,7 +81,7 @@ function onReady() {
         time = index * delay;
       }
 
-      time += (120 * layer);
+      time += (160 * layer);
       // console.table({ layer, delay, letter, letters, yOffset, xOffset })
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
@@ -111,17 +116,17 @@ function onReady() {
     // context.fill();
 
     for (let i = 1; i <= copies; i++) {
-      if (i % 2) {
-        context.fillStyle = g1;
-      } else {
-        context.fillStyle = g2;
-      }
       //     index * 4 pixel stagger
       //     4, 8, 12, 16 pixels respectively
       // const yOffset = i * 4;
       const yOffset = 0;
       const layer = i;
       titleLines.forEach(function (line, index) {
+        if (i % 2) {
+          context.fillStyle = g1;
+        } else {
+          context.fillStyle = g2;
+        }
         let comma;
         if (index !== 4) {
           comma = true;
@@ -134,6 +139,11 @@ function onReady() {
       authorLines.forEach(function (line, index, array) {
         const letters = line.split("");
         const comma = true;
+        if (i % 2) {
+          context.fillStyle = g2;
+        } else {
+          context.fillStyle = g1;
+        }
         drawWord(letters, -500 - yOffset - index * 100, i * 4, comma, layer);
       });
     }
