@@ -3,12 +3,12 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  /*   background: url(http://www.color-hex.com/palettes/26323.png) repeat; */
+    /* background: url(http://www.color-hex.com/palettes/26323.png) repeat; */
 }
 
 body {
   background: url(https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg);
-  background: rgb(40, 40, 40);
+  /* background: rgb(40, 40, 40); */
 }
 
 #wave,

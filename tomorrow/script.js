@@ -23,8 +23,10 @@ function onReady() {
   function createContextBaseProperties(context) {
     context.textAlign = "center";
     context.textBaseline = "middle";
-    context.font = "72px Arial";
-    context.lineWidth = 3;
+    context.font = "bold 72px Arial";
+    context.lineWidth = 4;
+    context.strokeStyle = "rgba(40,40,40, 0.9)";
+
   }
 
   function createCanvasBaseProperties() {
@@ -45,11 +47,11 @@ function onReady() {
   const copies = 4;
 
   // how close together sine waves will be
-  const frequency = 1 / 400;
+  const frequency = 1 / 600;
   // how tall sine waves will be
-  const amplitude = 32;
+  const amplitude = 1.5;
   // how many times per second animation will run
-  const fps = 24;
+  const fps = 60;
 
   let now = 0;
   createCanvasBaseProperties(canvas);
@@ -59,7 +61,7 @@ function onReady() {
   // number of times text is copied
   const getVal = function (offset = 0, frequency, amplitude) {
     // const now = Date.now()
-    return Math.sin((now + offset) * frequency) * amplitude / 4;
+    return Math.sin((now + offset) * frequency) * amplitude;
   };
 
 
@@ -70,7 +72,8 @@ function onReady() {
           val is the sin of time
         */
       letter = letter.toUpperCase();
-      const delay = 300;
+      // const delay = 300;
+      const delay = 450;
       //       get position for now for each interval
       //       each letter is 1.5 seconds behind the next
       let time;
@@ -81,7 +84,7 @@ function onReady() {
         time = index * delay;
       }
 
-      time += (160 * layer);
+      time += (300 * layer);
       // console.table({ layer, delay, letter, letters, yOffset, xOffset })
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
@@ -93,7 +96,8 @@ function onReady() {
       // console.log(x)
       const baseY = 100 - yOffset;
       // const y = baseY;
-      const y = baseY + val;
+      const y = baseY + val * 1.25 * (5 - layer);
+      // context.font = `${72 + val}px Arial`;
       // console.log({ xOffset })
       context.fillText(letter, x + xOffset, y);
       context.strokeText(letter, x + xOffset, y);
