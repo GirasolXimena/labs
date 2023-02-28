@@ -5,13 +5,14 @@
   font-style: normal;
   font-display: swap;
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html,
 body {
   font-family: Tomorrow;
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-    /* background: url(http://www.color-hex.com/palettes/26323.png) repeat; */
 }
 
 body {
@@ -23,4 +24,8 @@ body {
 #gradient {
   visibility: hidden;
   display: none;
+}
+#canvas {
+  box-sizing: border-box;
+
 }

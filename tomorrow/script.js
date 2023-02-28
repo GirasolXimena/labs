@@ -1,3 +1,4 @@
+// const copies = 4;
 const copies = 4;
 
 // how close together sine waves will be
@@ -8,22 +9,25 @@ const amplitude = 1.5;
 const fps = 60;
 
 let now = 0;
+/**
+ * 
+ * @param {CanvasRenderingContext2D} context - context
+ * @param {HTMLCanvasElement} canvas - canvas
+ */
+function createGradients(context, canvas) {
+  const { height, width } = canvas;
 
-function createGradients(context) {
-  const g1 = context.createLinearGradient(450, 0, 950, 0);
-  const g2 = context.createLinearGradient(450, 0, 950, 0);
+  const g1 = context.createLinearGradient(0, height / 2, width, height / 2);
+  const g2 = context.createLinearGradient(0, height / 2, width, height / 2);
   const blue = 'rgb(1, 187, 235)';
   const yellow = 'rgb(221, 206, 3)';
   const red = 'rgb(241, 126, 177)';
-  const stop = 0.3
-  const stop2 = 0.46
+  const stop = 0.5
   g1.addColorStop(0, blue);
   g1.addColorStop(stop, yellow);
-  g1.addColorStop(stop2, yellow);
   g1.addColorStop(1, red);
   g2.addColorStop(0, red);
   g2.addColorStop(stop, yellow);
-  g2.addColorStop(stop2, yellow);
   g2.addColorStop(1, blue);
   return { g1, g2 };
 }
@@ -37,12 +41,12 @@ function createContextBaseProperties(context) {
 }
 
 function createCanvasBaseProperties(canvas) {
-  const { clientWidth, clientHeight } = document.body;
-  canvas.height = clientHeight;
-  canvas.width = clientWidth;
+  // const { clientWidth, clientHeight } = document.body;
+  canvas.height = window.innerHeight - 3;
+  canvas.width = window.innerWidth - 0;
 }
 
-const getVal = function (offset = 0, frequency, amplitude) {
+function getVal(offset = 0, frequency, amplitude) {
   // const now = Date.now()
   return Math.sin((now + offset) * frequency) * amplitude;
 };
@@ -52,6 +56,7 @@ function onReady() {
 
 
   const canvas = document.getElementById("canvas");
+  /** @type {CanvasRenderingContext2D} */
   const context = canvas.getContext("2d");
 
   const title = document.getElementById("title");
@@ -62,12 +67,25 @@ function onReady() {
 
   createCanvasBaseProperties(canvas);
   createContextBaseProperties(context);
-  const { g1, g2 } = createGradients(context);
+  const { g1, g2 } = createGradients(context, canvas);
 
 
 
-  function drawLetters (letters, yOffset = 0, xOffset = 0, comma, layer) {
+  function drawLetters(letters, yOffset = 0, xOffset = 0, comma, layer) {
+    function guideLines() {
+      context.strokeRect(canvas.width / 2, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 - 80, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 - 160, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 - 240, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 - 320, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 + 80, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 + 160, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 + 240, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2 + 320, 0, 1, canvas.height)
+    }
+    // guideLines()
     return letters.forEach((letter, index, array) => {
+      index++
       //       ms
       /** 
           val is the sin of time
@@ -84,21 +102,38 @@ function onReady() {
       } else {
         time = index * delay;
       }
-
+      context.stroke
       time += (320 * layer);
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
       const halfWordWidth = wordWidth.width / 2;
       const letterWidth = context.measureText(letter);
       const halfLetterWidth = letterWidth.width / 2;
-      // console.log(halfWordWidth, wordWidth.width);
-      const x = canvas.width / 2 - halfWordWidth + index * 52;
-      // console.log(x)
+
+      let x = canvas.width / 2
+      const halfwayIndex = array.length / 2;
+
+      if (halfwayIndex % 2) {
+        if (index <= Math.floor(halfwayIndex)) {
+          x -= ((array.length - 1) / 2 - index + 1) * 80
+        } else if (index >= Math.ceil(halfwayIndex)) {
+          x += (index - 1 - ((array.length - 1) / 2)) * 80
+        }
+      } else {
+        if (index <= halfwayIndex) {
+          x -= ((array.length - 1) / 2 - index + 1) * 80
+        } else {
+          x += (index - 1 - ((array.length - 1) / 2)) * 80
+          // console.log('[right', { letter, index, halfwayIndex })
+        }
+      }
+
+      if (letter === 'T' || letter === 'G') {
+        console.log({ letter, index, len: array.length })
+
+      }
       const baseY = 100 - yOffset;
-      // const y = baseY;
-      const y = baseY + val * 1.25 * (5 - layer);
-      // context.font = `${72 + val}px Arial`;
-      // console.log({ xOffset })
+      const y = baseY + val * 3 * (5 - layer);
       context.fillText(letter, x + xOffset, y);
       context.strokeText(letter, x + xOffset, y);
       if (comma && letter === "W") {
@@ -115,9 +150,9 @@ function onReady() {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.rect(0, 0, canvas.width, canvas.height);
-    // context.fillStyle = "purple";
 
-    // context.fill();
+    // context.fillStyle = g2
+    context.fill();
 
     for (let i = 1; i <= copies; i++) {
       //     index * 4 pixel stagger
@@ -135,10 +170,10 @@ function onReady() {
         if (index !== 4) {
           comma = true;
         }
-        const lineOffset = yOffset * index * -3;
+        // const lineOffset = yOffset * index * -3;
         const letters = line.split("");
 
-        drawWord(letters, yOffset - index * 84, i * 4, comma, layer);
+        drawWord(letters, yOffset - index * 84, (copies - 1 - i) * -6, comma, layer);
       });
       authorLines.forEach(function (line, index, array) {
         const letters = line.split("");
@@ -148,7 +183,7 @@ function onReady() {
         } else {
           context.fillStyle = g1;
         }
-        drawWord(letters, -500 - yOffset - index * 100, i * 4, comma, layer);
+        drawWord(letters, -500 - yOffset - index * 100, ((copies - 1 - i) * -8), comma, layer);
       });
     }
   };
@@ -159,8 +194,7 @@ function onReady() {
   }
 
   const update = function () {
-    // now = Date.now();
-    now += fps / 2;
+    now = Date.now();
     draw();
     doFramesPerSecond(fps, update);
   };
