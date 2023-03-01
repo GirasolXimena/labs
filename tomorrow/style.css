@@ -1,15 +1,17 @@
 @font-face {
-  font-family: 'Tomorrow';
-  src: url('fonts/1997.otf');
+  font-family: "Tomorrow";
+    src: url("fonts/1997.otf");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
+
 :root {
   --yellow: rgb(221, 206, 3);
   --blue: rgb(1, 187, 235);
   --red: rgb(224, 73, 141);
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -20,7 +22,7 @@ html,
 body {
   font-family: Tomorrow;
   background-image: url(https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg);
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
     height: 100%;
     /* background-position: 25% 50%; */
     /* background-size: 2560px; */
@@ -29,11 +31,11 @@ body {
 main {
   height: 100%;
   backdrop-filter: blur(10px);
-  background-image: linear-gradient(rgba(219, 166, 166, 0.5), rgba(0, 0, 172, 0.75));
+  background-image: linear-gradient(rgba(219, 166, 166, 0.5),
+        rgba(0, 0, 172, 0.75));
   display: grid;
   place-items: center;
 }
-
 
 #wave,
 #gradient {
@@ -43,16 +45,22 @@ main {
 
 #canvas {
   display: block;
-    background-image: url('https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg');
+  box-sizing: border-box;
+    background-image: url("https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg");
     background-repeat: no-repeat;
   
     background-position: 25% 50%;
     background-size: 2560px 1440px;
-    box-sizing: border-box;
-    margin: auto;
-      box-shadow: 0 0 12px 12px rgba(219, 166, 166, 0.5), inset 0 0 3px 2px rgba(0, 0, 172, 0.75);
-      border: 24px solid;
-      border-image-source: linear-gradient(to right, var(--red), rgb(221, 206, 3), var(--blue));
-      border-image-slice: 1;
-      border-width: 24px;
+  margin: auto;
+  border: 24px solid;
+  border-image-source: linear-gradient(to right,
+        var(--red),
+        var(--yellow),
+        var(--blue));
+    border-image-slice: 1;
+    border-width: 24px;
+  border-image-outset: 24px;
+    box-shadow: -12px 12px 28px 28px rgba(224, 73, 141, 0.25),
+      12px -2px 28px 28px rgba(1, 187, 235, 0.25),
+      0px -12px 28px 28px rgba(221, 206, 3, 0.25);
 }
