@@ -9,20 +9,26 @@ const amplitude = 1.5;
 const fps = 60;
 
 let now = 0;
+
+let canvas;
 /**
- * 
+ *
  * @param {CanvasRenderingContext2D} context - context
  * @param {HTMLCanvasElement} canvas - canvas
  */
 function createGradients(context, canvas) {
   const { height, width } = canvas;
+  const root = document.querySelector(':root')
+  const style = getComputedStyle(root);
+
+  const red = style.getPropertyValue("--red");
+  const blue = style.getPropertyValue("--blue");
+  const yellow = style.getPropertyValue("--yellow");
+
 
   const g1 = context.createLinearGradient(0, height / 2, width, height / 2);
   const g2 = context.createLinearGradient(0, height / 2, width, height / 2);
-  const blue = 'rgb(1, 187, 235)';
-  const yellow = 'rgb(221, 206, 3)';
-  const red = 'rgb(241, 126, 177)';
-  const stop = 0.5
+  const stop = 0.5;
   g1.addColorStop(0, blue);
   g1.addColorStop(stop, yellow);
   g1.addColorStop(1, red);
@@ -41,21 +47,26 @@ function createContextBaseProperties(context) {
 }
 
 function createCanvasBaseProperties(canvas) {
+  // mono font each char 80 px wide
+  const fontWidth = 80
+  // longest line in title
+  const maxChars = 9
+  // 1 char width
+  const margin = 1
   // const { clientWidth, clientHeight } = document.body;
-  canvas.height = window.innerHeight - 3;
-  canvas.width = window.innerWidth - 0;
+  canvas.height = 1000;
+  canvas.width = fontWidth * (maxChars + margin);
 }
 
 function getVal(offset = 0, frequency, amplitude) {
   // const now = Date.now()
   return Math.sin((now + offset) * frequency) * amplitude;
-};
+}
 
 function onReady() {
   console.log("ready");
 
-
-  const canvas = document.getElementById("canvas");
+  canvas = document.getElementById("canvas");
   /** @type {CanvasRenderingContext2D} */
   const context = canvas.getContext("2d");
 
@@ -69,23 +80,23 @@ function onReady() {
   createContextBaseProperties(context);
   const { g1, g2 } = createGradients(context, canvas);
 
-
-
   function drawLetters(letters, yOffset = 0, xOffset = 0, comma, layer) {
     function guideLines() {
-      context.strokeRect(canvas.width / 2, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 - 80, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 - 160, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 - 240, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 - 320, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 + 80, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 + 160, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 + 240, 0, 1, canvas.height)
-      context.strokeRect(canvas.width / 2 + 320, 0, 1, canvas.height)
+      context.strokeRect(canvas.width / 2, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 - 80, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 - 160, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 - 240, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 - 320, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 - 360, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 + 80, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 + 160, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 + 240, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 + 320, 0, 1, canvas.height);
+      context.strokeRect(canvas.width / 2 + 360, 0, 1, canvas.height);
     }
     // guideLines()
     return letters.forEach((letter, index, array) => {
-      index++
+      index++;
       //       ms
       /** 
           val is the sin of time
@@ -102,36 +113,35 @@ function onReady() {
       } else {
         time = index * delay;
       }
-      context.stroke
-      time += (320 * layer);
+      context.stroke;
+      time += 320 * layer;
       const val = getVal(time, frequency, amplitude);
       const wordWidth = context.measureText(letters);
       const halfWordWidth = wordWidth.width / 2;
       const letterWidth = context.measureText(letter);
       const halfLetterWidth = letterWidth.width / 2;
 
-      let x = canvas.width / 2
+      let x = canvas.width / 2;
       const halfwayIndex = array.length / 2;
 
       if (halfwayIndex % 2) {
         if (index <= Math.floor(halfwayIndex)) {
-          x -= ((array.length - 1) / 2 - index + 1) * 80
+          x -= ((array.length - 1) / 2 - index + 1) * 80;
         } else if (index >= Math.ceil(halfwayIndex)) {
-          x += (index - 1 - ((array.length - 1) / 2)) * 80
+          x += (index - 1 - (array.length - 1) / 2) * 80;
         }
       } else {
         if (index <= halfwayIndex) {
-          x -= ((array.length - 1) / 2 - index + 1) * 80
+          x -= ((array.length - 1) / 2 - index + 1) * 80;
         } else {
-          x += (index - 1 - ((array.length - 1) / 2)) * 80
+          x += (index - 1 - (array.length - 1) / 2) * 80;
           // console.log('[right', { letter, index, halfwayIndex })
         }
       }
 
-      if (letter === 'T' || letter === 'G') {
-        console.log({ letter, index, len: array.length })
-
-      }
+      // if (letter === "T" || letter === "G") {
+        // console.log({ letter, index, len: array.length });
+      // }
       const baseY = 100 - yOffset;
       const y = baseY + val * 3 * (5 - layer);
       context.fillText(letter, x + xOffset, y);
@@ -141,10 +151,16 @@ function onReady() {
         context.strokeText(",", x + halfLetterWidth * 1.5, y);
       }
     });
-  };
+  }
 
   const draw = function () {
-    const drawWord = function (letters, yOffset = 0, xOffset = 0, comma, layer) {
+    const drawWord = function (
+      letters,
+      yOffset = 0,
+      xOffset = 0,
+      comma,
+      layer
+    ) {
       drawLetters(letters, yOffset, xOffset, comma, layer);
     };
 
@@ -152,7 +168,11 @@ function onReady() {
     context.rect(0, 0, canvas.width, canvas.height);
 
     // context.fillStyle = g2
-    context.fill();
+    function fillBackgroundGradient() {
+      context.fill();
+    }
+
+    // fillBackgroundGradient()
 
     for (let i = 1; i <= copies; i++) {
       //     index * 4 pixel stagger
@@ -173,7 +193,13 @@ function onReady() {
         // const lineOffset = yOffset * index * -3;
         const letters = line.split("");
 
-        drawWord(letters, yOffset - index * 84, (copies - 1 - i) * -6, comma, layer);
+        drawWord(
+          letters,
+          yOffset - index * 84,
+          (copies - 1 - i) * -6,
+          comma,
+          layer
+        );
       });
       authorLines.forEach(function (line, index, array) {
         const letters = line.split("");
@@ -183,7 +209,13 @@ function onReady() {
         } else {
           context.fillStyle = g1;
         }
-        drawWord(letters, -500 - yOffset - index * 100, ((copies - 1 - i) * -8), comma, layer);
+        drawWord(
+          letters,
+          -700 - yOffset - index * 100,
+          (copies - 1 - i) * -8,
+          comma,
+          layer
+        );
       });
     }
   };
@@ -201,6 +233,6 @@ function onReady() {
   update();
 }
 
-
 // event listener on load to make sure everything is loaded before animation starts
 window.addEventListener("load", onReady);
+// window.addEventListener("resize", onReady)
