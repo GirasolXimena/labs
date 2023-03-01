@@ -41,11 +41,13 @@ function createGradients(context, canvas) {
 function createContextBaseProperties(context) {
   context.textAlign = "center";
   context.textBaseline = "middle";
-  context.font = "bold 72px Tomorrow";
-
   context.strokeStyle = "rgba(40,40,40, 1)";
 }
 
+/**
+ * 
+ * @param {HTMLCanvasElement} canvas - Canvas for setting base properties
+ */
 function createCanvasBaseProperties(canvas) {
   // mono font each char 80 px wide
   const fontWidth = 80
@@ -58,26 +60,49 @@ function createCanvasBaseProperties(canvas) {
   canvas.width = fontWidth * (maxChars + margin);
 }
 
-function getVal(offset = 0, frequency, amplitude) {
+/**
+ * 
+ * @param {Number} offset - milliseconds to delay sine wave movement
+ *                          used to either sync vertical movement or
+ *                          simulate wave movement
+ * @param {Number} frequency - closeness of sine wave crest
+ * @param {Number} amplitude - height of sine wave crest
+ * @returns 
+ */
+function getVal(offset, frequency, amplitude) {
   // const now = Date.now()
   return Math.sin((now + offset) * frequency) * amplitude;
 }
 
+class TextBlock {
+  constructor(element) {
+    this.type = element.id;
+    this.canvas = element;
+    this.animate = this.type !== "subtitle"
+  }
+
+  get lines() {
+    let lines = this.canvas.textContent.trim()
+    if (this.type === "subtitle") {
+      return [lines]
+    }
+    return lines.split(" ")
+  }
+}
+
 function onReady() {
   console.log("ready");
-
+  /** @type {HTMLCanvasElement} */
   canvas = document.getElementById("canvas");
   /** @type {CanvasRenderingContext2D} */
   const context = canvas.getContext("2d");
 
-  const title = document.getElementById("title");
-  const titleLines = title.textContent.trim().split(" ");
-
-  const author = document.getElementById("author");
-  const authorLines = author.textContent.trim().split(" ");
-
-  const subtitle = document.getElementById("subtitle");
-  const subtitleLines = [subtitle.textContent.trim()];
+  /**
+   * create elements
+   */
+  const title = new TextBlock(document.querySelector("#title"))
+  const author = new TextBlock(document.querySelector("#author"))
+  const subtitle = new TextBlock(document.querySelector("#subtitle"))
 
   createCanvasBaseProperties(canvas);
   createContextBaseProperties(context);
@@ -191,7 +216,7 @@ function onReady() {
     for (let i = 1; i <= copies; i++) {
       const yOffset = 0;
       const layer = i;
-      titleLines.forEach(function (line, index) {
+      title.lines.forEach(function (line, index) {
         if (i % 2) {
           context.fillStyle = g1;
         } else {
@@ -212,7 +237,7 @@ function onReady() {
           layer
         );
       });
-      authorLines.forEach(function (line, index, array) {
+      author.lines.forEach(function (line, index, array) {
         const letters = line.split("");
         const comma = true;
         if (i % 2) {
@@ -229,7 +254,7 @@ function onReady() {
         );
       });
 
-      subtitleLines.forEach(function (line, index, array) {
+      subtitle.lines.forEach(function (line, index, array) {
         const letters = line.split("");
         const comma = "subtitle";
         if (i % 2) {
