@@ -10,7 +10,12 @@ const fps = 60;
 
 let now = 0;
 
+let gradientStop = 0.5;
+let multiplier = 1;
 let canvas;
+
+let resetGradient = false;
+let resetMultiplier = false;
 /**
  *
  * @param {CanvasRenderingContext2D} context - context
@@ -18,22 +23,20 @@ let canvas;
  */
 function createGradients(context, canvas) {
   const { height, width } = canvas;
-  const root = document.querySelector(':root')
+  const root = document.querySelector(":root");
   const style = getComputedStyle(root);
 
   const red = style.getPropertyValue("--red");
   const blue = style.getPropertyValue("--blue");
   const yellow = style.getPropertyValue("--yellow");
 
-
   const g1 = context.createLinearGradient(0, height / 2, width, height / 2);
   const g2 = context.createLinearGradient(0, height / 2, width, height / 2);
-  const stop = 0.5;
   g1.addColorStop(0, blue);
-  g1.addColorStop(stop, yellow);
+  g1.addColorStop(gradientStop, yellow);
   g1.addColorStop(1, red);
   g2.addColorStop(0, red);
-  g2.addColorStop(stop, yellow);
+  g2.addColorStop(gradientStop, yellow);
   g2.addColorStop(1, blue);
   return { g1, g2 };
 }
@@ -41,99 +44,72 @@ function createGradients(context, canvas) {
 function createContextBaseProperties(context) {
   context.textAlign = "center";
   context.textBaseline = "middle";
+  context.font = "bold 72px Tomorrow";
+
   context.strokeStyle = "rgba(40,40,40, 1)";
 }
 
-/**
- * 
- * @param {HTMLCanvasElement} canvas - Canvas for setting base properties
- */
 function createCanvasBaseProperties(canvas) {
   // mono font each char 80 px wide
-  const fontWidth = 80
+  const fontWidth = 80;
   // longest line in title
-  const maxChars = 9
+  const maxChars = 9;
   // 1 char width
-  const margin = 1
-  // const { clientWidth, clientHeight } = document.body;
+  const margin = 1;
+
   canvas.height = 1000;
   canvas.width = fontWidth * (maxChars + margin);
 }
 
-/**
- * 
- * @param {Number} offset - milliseconds to delay sine wave movement
- *                          used to either sync vertical movement or
- *                          simulate wave movement
- * @param {Number} frequency - closeness of sine wave crest
- * @param {Number} amplitude - height of sine wave crest
- * @returns 
- */
 function getVal(offset, frequency, amplitude) {
-  // const now = Date.now()
   return Math.sin((now + offset) * frequency) * amplitude;
 }
 
-class TextBlock {
-  constructor(element) {
-    this.type = element.id;
-    this.canvas = element;
-    this.animate = this.type !== "subtitle"
-  }
-
-  get lines() {
-    let lines = this.canvas.textContent.trim()
-    if (this.type === "subtitle") {
-      return [lines]
-    }
-    return lines.split(" ")
-  }
-}
-
 function onReady() {
-  console.log("ready");
-  /** @type {HTMLCanvasElement} */
   canvas = document.getElementById("canvas");
   /** @type {CanvasRenderingContext2D} */
   const context = canvas.getContext("2d");
 
-  /**
-   * create elements
-   */
-  const title = new TextBlock(document.querySelector("#title"))
-  const author = new TextBlock(document.querySelector("#author"))
-  const subtitle = new TextBlock(document.querySelector("#subtitle"))
+  canvas.addEventListener("mousemove", (e) => {
+    const x = Math.max(e.pageX - e.target.offsetLeft, 0);
+    const y = Math.max(e.pageY - e.target.offsetTop, 0);
+    let posX = x / 849;
+    posX = Math.round(posX * 100) / 100;
+
+    let posY = y / 1047;
+    posY = Math.round(posY * 100) / 100;
+    posY = 1 - posY;
+
+    multiplier = Math.max(1, posY * 3);
+
+    gradientStop = Math.round(posX * 100) / 100;
+  });
+
+  canvas.addEventListener("mouseleave", () => {
+    resetGradient = true;
+    resetMultiplier = true;
+  });
+
+  const title = document.getElementById("title");
+  const titleLines = title.textContent.trim().split(" ");
+
+  const author = document.getElementById("author");
+  const authorLines = author.textContent.trim().split(" ");
+
+  const subtitle = document.getElementById("subtitle");
+  const subtitleLines = [subtitle.textContent.trim()];
 
   createCanvasBaseProperties(canvas);
   createContextBaseProperties(context);
-  const { g1, g2 } = createGradients(context, canvas);
 
-  function drawLetters(letters, yOffset = 0, xOffset = 0, comma, layer) {
-    function guideLines() {
-      context.strokeRect(canvas.width / 2, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 - 80, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 - 160, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 - 240, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 - 320, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 - 360, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 + 80, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 + 160, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 + 240, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 + 320, 0, 1, canvas.height);
-      context.strokeRect(canvas.width / 2 + 360, 0, 1, canvas.height);
-    }
-    // guideLines()
+  function drawLetters(letters, yOffset = 0, xOffset = 0, type, layer) {
     return letters.forEach((letter, index, array) => {
       index++;
-      //       ms
-      /** 
-          val is the sin of time
-        */
+
       letter = letter.toUpperCase();
-      // const delay = 300;
-      const delay = 450;
       //       get position for now for each interval
-      //       each letter is 1.5 seconds behind the next
+      //       each letter is 0.5 seconds behind the next
+      const delay = 500;
       let time;
       // AND needs to be offset to go to middle
       if (array.length < 7) {
@@ -145,16 +121,20 @@ function onReady() {
       time += 320 * layer;
       let val = 1;
       const wordWidth = context.measureText(letters);
-      const halfWordWidth = wordWidth.width / 2;
+
       let letterWidth;
-      const halfLetterWidth = letterWidth / 2;
-      if (comma == 'subtitle') {
-        context.font = "bold 36px Tomorrow";
-        letterWidth = 40;
+      if (type == "subtitle") {
+        context.font = "bold 32px Tomorrow";
+        letterWidth = 32;
       } else {
-        val = getVal(time, frequency, amplitude) / 1.5
-        context.font = "bold 72px Tomorrow";
-        letterWidth = 80
+        val = getVal(time, frequency, amplitude) / 1.5;
+        if (type === "title") {
+          context.font = "bold 72px Tomorrow";
+          letterWidth = 84;
+        } else if (type === "author") {
+          context.font = "bold 64px Tomorrow";
+          letterWidth = 64;
+        }
       }
       let x = canvas.width / 2;
       const halfwayIndex = array.length / 2;
@@ -174,25 +154,53 @@ function onReady() {
       }
 
       const baseY = 100 - yOffset;
-      const y = baseY + val * 3 * (5 - layer);
-      if (comma === 'subtitle') {
-        context.lineWidth = 3
+      const y = baseY + val * 3 * (5 - layer) * multiplier;
+      if (type === "subtitle") {
+        context.lineWidth = 3;
         context.fillText(letter, x + xOffset, y);
         context.strokeText(letter, x + xOffset, y);
-
-      } else {
+      } else if (type === "title") {
+        context.lineWidth = 4;
+        context.fillText(letter, x + xOffset / 2, y);
+        context.strokeText(letter, x + xOffset / 2, y);
+      } else if (type === "author") {
         context.lineWidth = 4;
         context.fillText(letter, x + xOffset / 2, y);
         context.strokeText(letter, x + xOffset / 2, y);
       }
-      if (comma && letter === "W") {
-        context.fillText(",", x + halfLetterWidth * 1.5, y);
-        context.strokeText(",", x + halfLetterWidth * 1.5, y);
+      if (type === "title" && letter === "W" && y < 300) {
+        const halfLetterWidth = (letterWidth * 2) / 3;
+        context.fillText(",", x + halfLetterWidth, y);
+        context.strokeText(",", x + halfLetterWidth, y);
       }
     });
   }
 
   const draw = function () {
+    const { g1, g2 } = createGradients(context, canvas);
+    if (resetGradient === true) {
+      const interval = 1;
+      const value = Math.round(gradientStop * 100);
+      if (value > 50) {
+        gradientStop = (value - interval) / 100;
+      } else if (value < 50) {
+        gradientStop = (value + interval) / 100;
+      } else if (value === 50) {
+        resetGradient = false;
+      }
+    }
+
+    if (resetMultiplier === true) {
+      if (multiplier !== 1) {
+        multiplier -= 1 / 100;
+
+        if (multiplier < 1) {
+          multiplier = 1;
+          resetMultiplier = false;
+        }
+      }
+    }
+
     const drawWord = function (
       letters,
       yOffset = 0,
@@ -216,15 +224,17 @@ function onReady() {
     for (let i = 1; i <= copies; i++) {
       const yOffset = 0;
       const layer = i;
-      title.lines.forEach(function (line, index) {
+      titleLines.forEach(function (line, index) {
         if (i % 2) {
           context.fillStyle = g1;
         } else {
           context.fillStyle = g2;
         }
-        let comma;
+        let type;
         if (index !== 4) {
-          comma = true;
+          type = "title";
+        } else {
+          type = "title";
         }
         // const lineOffset = yOffset * index * -3;
         const letters = line.split("");
@@ -232,14 +242,14 @@ function onReady() {
         drawWord(
           letters,
           yOffset - index * 84,
-          (copies - 1 - i) * -6,
-          comma,
+          (copies - 1 - i) * -12,
+          type,
           layer
         );
       });
-      author.lines.forEach(function (line, index, array) {
+      authorLines.forEach(function (line, index, array) {
         const letters = line.split("");
-        const comma = true;
+        const type = "author";
         if (i % 2) {
           context.fillStyle = g2;
         } else {
@@ -248,27 +258,28 @@ function onReady() {
         drawWord(
           letters,
           -700 - yOffset - index * 100,
-          (copies - 1 - i) * -8,
-          comma,
+          (copies - 1 - i) * -12,
+          type,
           layer
         );
       });
 
-      subtitle.lines.forEach(function (line, index, array) {
+      subtitleLines.forEach(function (line, index, array) {
         const letters = line.split("");
-        const comma = "subtitle";
+        const type = "subtitle";
         if (i % 2) {
           context.fillStyle = g1;
         } else {
           context.fillStyle = g2;
         }
         drawWord(
-          letters, -550 - yOffset - index * 100,
-          (copies - 1 - i) * -2,
-          comma,
+          letters,
+          -550 - yOffset - index * 100,
+          (copies - 1 - i) * -1,
+          type,
           layer
-        )
-      })
+        );
+      });
     }
   };
 

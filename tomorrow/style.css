@@ -1,16 +1,16 @@
 @font-face {
   font-family: "Tomorrow";
-  src: url("fonts/1997.otf");
+  src: url("https://assets.codepen.io/3862739/1997.otf");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --yellow: rgb(221, 206, 3);
-  --blue: rgb(1, 187, 235);
-  --red: rgb(224, 73, 141);
-  --wave: url("https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg")
+  --yellow: rgb(255, 238, 0);
+    --blue: rgb(9, 206, 255);
+    --red: rgb(253, 60, 147);
+    --wave: url("https://assets.codepen.io/3862739/The_Great_Wave_off_Kanagawa.jpg");
 }
 
 * {
@@ -34,7 +34,7 @@ body {
 main {
   backdrop-filter: blur(10px);
   background-image: linear-gradient(rgba(219, 166, 166, 0.5),
-      rgba(0, 0, 172, 0.75));
+        rgba(0, 0, 172, 0.75));
   display: grid;
   place-items: center;
 }
@@ -55,9 +55,9 @@ main {
   margin: auto;
   border: 24px solid;
   border-image-source: linear-gradient(to right,
-      var(--red),
-      var(--yellow),
-      var(--blue));
+        var(--red),
+        var(--yellow),
+    var(--blue));
   border-image-slice: 1;
   border-width: 24px;
   border-image-outset: 24px;
