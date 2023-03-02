@@ -24,11 +24,11 @@ body,
 main {
   height: 100%;
 }
+
 body {
   font-family: Tomorrow;
   background-image: var(--wave);
   background-repeat: no-repeat;
-  
 }
 
 main {
@@ -49,19 +49,19 @@ main {
   display: block;
   box-sizing: border-box;
   background-image: var(--wave);
-    background-repeat: no-repeat;
-    background-position: 25% 50%;
-    background-size: 2560px 1440px;
+  background-repeat: no-repeat;
+  background-position: 25% 50%;
+  background-size: 2560px 1440px;
   margin: auto;
   border: 24px solid;
   border-image-source: linear-gradient(to right,
       var(--red),
-        var(--yellow),
-        var(--blue));
-        border-image-slice: 1;
-          border-width: 24px;
+      var(--yellow),
+      var(--blue));
+  border-image-slice: 1;
+  border-width: 24px;
   border-image-outset: 24px;
   box-shadow: -12px 12px 28px 28px rgba(224, 73, 141, 0.25),
-      12px -2px 28px 28px rgba(1, 187, 235, 0.25),
-      0px -12px 28px 28px rgba(221, 206, 3, 0.25);
+    12px -2px 28px 28px rgba(1, 187, 235, 0.25),
+    0px -12px 28px 28px rgba(221, 206, 3, 0.25);
 }
