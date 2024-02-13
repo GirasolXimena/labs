@@ -1,0 +1,51 @@
+@font-face {
+  font-family: 'something-unfriendly';
+  src: url('fonts/something-unfriendly.otf');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  height: 100%;
+  background-color: black;
+  display: grid;
+  place-items: center;
+}
+
+img {
+  display: block;
+  width: 400px;
+  opacity: 60%;
+  mix-blend-mode: color-burn;
+}
+
+body {
+  position: relative;
+  border: 32px double red;
+  font-family: 'something-unfriendly';
+  font-weight: bold;
+  font-style: normal;
+  color: white;
+  display: grid;
+  place-items: end center;
+  overflow: auto;
+  width: 400px;
+  height: 640px;
+  background-image: radial-gradient(circle at 50% 50%, red, transparent);
+  background-clip: content-box;
+}
+ h1 {
+  position: absolute;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  text-transform: uppercase;
+  background-color: white;
+  color: black;
+  font-size: 1.5em;
+  letter-spacing: -0.8em;
+  padding: 1em 0 0.8em;
+  line-height: 1.5em;
+  left: 10%;
+  top: 0;
+ }
