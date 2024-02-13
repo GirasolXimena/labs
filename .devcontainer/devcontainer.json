@@ -21,6 +21,13 @@
 		"ghcr.io/devcontainers-contrib/features/typescript:2": {
 			"version": "latest"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ritwickdey.LiveServer"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
