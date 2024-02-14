@@ -14,10 +14,12 @@ html, body {
 }
 
 img {
+  position: absolute;
+  top: 0;
   display: block;
-  width: 400px;
+  width: 320px;
   opacity: 60%;
-  mix-blend-mode: color-burn;
+  /* mix-blend-mode: color-burn; */
 }
 
 body {
@@ -30,8 +32,8 @@ body {
   display: grid;
   place-items: end center;
   overflow: auto;
-  width: 400px;
-  height: 640px;
+  width: 380px;
+  height: 610px;
   background-image: radial-gradient(circle at 50% 50%, red, transparent);
   background-clip: content-box;
 }
