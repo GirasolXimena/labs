@@ -8,9 +8,23 @@
 
 html, body {
   height: 100%;
-  background-color: black;
+  /* background-color: black; */
   display: grid;
   place-items: center;
+}
+
+html {
+  background-color: black;
+}
+
+body {
+  position: relative;
+}
+
+audio {
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 img {
@@ -18,8 +32,6 @@ img {
   top: 0;
   display: block;
   width: 320px;
-  opacity: 60%;
-  /* mix-blend-mode: color-burn; */
 }
 
 body {
@@ -34,9 +46,9 @@ body {
   overflow: auto;
   width: 380px;
   height: 610px;
-  background-image: radial-gradient(circle at 50% 50%, red, transparent);
   background-clip: content-box;
 }
+
  h1 {
   position: absolute;
   writing-mode: vertical-lr;
@@ -50,4 +62,28 @@ body {
   line-height: 1.5em;
   left: 10%;
   top: 0;
+ }
+
+ #container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  /* mix-blend-mode: lighten; */
+}
+#canvas {
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+ #dress, #shirt {
+  mix-blend-mode: multiply;
  }
