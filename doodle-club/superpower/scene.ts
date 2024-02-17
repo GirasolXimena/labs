@@ -18,7 +18,13 @@ function main() {
   const boxDepth = 1;
   const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
 
-  const material = new THREE.MeshPhongMaterial({ color: 0x44aa88 });
+  const loader = new THREE.TextureLoader();
+  loader.load(
+    "./assets/liminal.jpg",
+    function (texture) {
+      scene.background = texture;
+    }
+  );
 
   function render(time) {
     time *= 0.001; // convert time to seconds
