@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+
 let currentTime = new Date()
 let timeStopped = document.documentElement.dataset.timeStopped
 const timeSwapEl = document.getElementById('time-swap')
@@ -34,3 +37,8 @@ const animate = (time) => {
 }
 swapTime(timeStopped !== "false")
 animate()
+
+function main() {
+  const canvas = document.querySelector('#c')
+  const renderer = new THREE.WebGLRenderer({antialias: true, canvas})
+}
