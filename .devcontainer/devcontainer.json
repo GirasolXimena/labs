@@ -25,7 +25,8 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"ritwickdey.LiveServer"
+				"ritwickdey.LiveServer",
+				"vunguyentuan.vscode-postcss"
 			]
 		}
 	}
