@@ -1,3 +1,4 @@
+@import url('98.css');
 :root {
   --transition-med: 2s opacity linear;
 }
@@ -67,7 +68,8 @@ body {
 }
 
 #time-nav {
-  background-color: blue;
+  /* background-color: blue; */
+  background-color: #c0c0c0;
   display: flex;
   justify-content: space-between;
   position: relative;

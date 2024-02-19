@@ -6,9 +6,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "98.css": "^0.1.20",
+    "howler": "^2.2.4",
+    "p5": "^1.9.0",
     "three": "^0.161.0"
   },
   "devDependencies": {
+    "@types/howler": "^2.2.11",
     "@types/node": "^20.11.19",
     "vite": "^5.1.3"
   }
