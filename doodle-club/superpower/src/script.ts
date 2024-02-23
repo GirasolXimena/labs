@@ -9,6 +9,8 @@ const clockEl = document.getElementById("clock") as HTMLDivElement;
 let notificationSound: Howl | undefined = undefined;
 
 
+
+
 const swapTime = (stopTime = false) => {
   timeStopped = stopTime || !timeStopped;
   document.documentElement.dataset.timeStopped = String(timeStopped);
@@ -26,7 +28,7 @@ const handleClick = () => {
   notificationSound.play()
 };
 
-timeSwapEl.addEventListener("click", handleClick, false);
+// timeSwapEl.addEventListener("click", handleClick, false);
 
 const updateTime = (time) => {
   let timeString;
@@ -52,4 +54,4 @@ const animate = (time = 0) => {
   requestAnimationFrame(animate);
 };
 
-animate();
+// animate();
