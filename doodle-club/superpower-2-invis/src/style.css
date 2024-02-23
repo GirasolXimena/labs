@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+
+:root {
+  --gradient: repeating-linear-gradient(black 0px, black 30px, darkcyan 30px, darkcyan 60px, black 60px);
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  display: grid;
+  place-items: center;
+}
+
+body {
+  font-family: 'Noto Sans KR';
+  font-weight: lighter;
+  position: relative;
+  margin: 0;
+  padding: 2em;
+  height: 600px;
+  width: 800px;
+  overflow: hidden;
+  border: 5px solid lightgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+
+
+  &, &::after {
+    background-color: black;
+    background-image: var(--gradient);
+    background-repeat: repeat-y;
+    /* background-repeat: no-repeat; */
+    background-size: 100% 60px;
+    background-position-y: top;
+    animation: slide 8s linear infinite;
+  }
+
+  &::after {
+    content: "";
+    mask-image: url('/assets/avatar.png');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    background-color: aliceblue;
+    height: 75%;
+    width: 50%;
+    animation-direction: reverse;
+    animation-duration: 12s;
+  }
+}
+
+@keyframes slide {
+  from{
+    background-position-y: 0;
+  }
+  to {
+    background-position-y: 60px;
+  }
+}
+
+h1, p {
+  opacity: 0.5;
+  color: white;
+  background-clip: text;
+  /* mix-blend-mode: overlay; */
+}
+h1 {
+  font-weight: bolder;
+
+  align-self: baseline;
+  font-size: 500%;
+  line-height: 1.1;
+  margin: 0em 0.25em 0;
+}
+
+p {
+  position: absolute;
+  width: 240px;
+  color: white;
+  white-space: pre;
+  right: 0;
+  top: 0;
+  text-align: left;
+}
+
+canvas {
+  position: absolute;
+  left: 50%;
+  top: 76%;
+  width: 215px;
+  height: 50px;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+}
