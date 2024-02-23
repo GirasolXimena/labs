@@ -1,170 +1,60 @@
-@import url('98.css');
-:root {
-  --transition-med: 2s opacity linear;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 html {
-  height: 100%;
-  background-color: black;
-  border: 4px solid green;
+  background-color: #FFD8dc;
   display: grid;
   place-items: center;
-  background-image: url("./assets/dream.jpg");
-  background-position: center;
-  background-size: cover;
-  z-index: -2;
-  &::after {
-    transition: var(--transition-med);
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    /* background-color: navy; */
-    left: 0;
-    top: 0;
-    z-index: -1;
-    background-image: url("./assets/real.jpg");
-    background-size: cover;
-    background-position: center;
-    /* mix-blend-mode: luminosity; */
-  }
-  &[data-time-stopped="true"] {
-    &::after {
-      opacity: 0%;
-    }
-    #time-menu {
-      opacity: 100%;
-    }
-  }
-  &[data-time-stopped="false"] {
-    &::after {
-      opacity: 100%;
-    }
-    #time-menu {
-      opacity: 0;
-      pointer-events: none;
-    }
-  }
+  height: 100vh;
+  width: 100vw;
+}
+
+canvas {
+  border: 1px solid red;
+}
+
+.ofelia {
+  width: 76px;
+  height: 88px;
+  object-fit: cover;
+  object-position: left center;
+  right: 180px;
 }
 
 body {
-  /* opacity: 5%; */
-  background-color: royalblue;
-  background-image: url(./assets/windows.jpg);
-  background-size: cover;
-  background-position: center;
-  display: grid;
-  place-items: end stretch;
-  border: 4px solid orange;
-  aspect-ratio: 4/3;
-  height: 30%;
-  min-height: 150px;
-  /* display: none; */
-}
-
-#time-nav {
-  /* background-color: blue; */
-  background-color: #c0c0c0;
-  display: flex;
-  justify-content: space-between;
   position: relative;
+  height: 512px;
+  width: 512px;
+  border: double 48px darkcyan;
+  background-image: url(./assets/background.png);
+  background-clip: content-box;
+  background-size: auto 100%;
+  background-position-y: bottom;
+  background-position-x: 0px;
+  background-repeat: repeat-x;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: end;
 }
-
-#clock {
-  background-color: green;
-  padding: 1em 0.5em;
-  color: #fff;
-}
-
-#time-menu {
-  transition: var(--transition-med);
-  border: 2px solid lightgray;
-  background-color: lightgray;
+img {
+  margin: 0px;
+  padding: 1px;
   position: absolute;
-  bottom: 100%;
-  display: grid;
-  grid-template-columns: min-content 240px;
-  h1 {
-    background-image: linear-gradient(blue 80%, black);
-    color: whitesmoke;
-    writing-mode: vertical-lr;
-    text-orientation: sideways-right;
-    transform: rotate(-180deg);
-  }
-  ul {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    /* justify-content: space-evenly; */
-
-    li {
-      /* flexg */
-      /* text-align: center; */
-      position: relative;
-      display: flex;
-      gap: 0.5em;
-      align-items: center;
-      flex-grow: 1;
-      vertical-align: middle;
-
-      &:has(ul) {
-        &::before {
-          position: absolute;
-          right: 0.5em;
-          content: "";
-          border: solid black;
-          border-width: 0 3px 3px 0;
-          display: block;
-          padding: 3px;
-          transform-origin: center;
-          transform: rotate(-45deg);
-        }
-      }
-
-      &:hover {
-        color: white;
-        background-color: blue;
-
-        &:has(ul)::before {
-          border-color: white;
-        }
-
-        ul {
-          background-color: lightgray;
-          color: black;
-          position: absolute;
-          display: block;
-          left: 100%;
-          top: 0;
-        }
-      }
-
-      ul {
-        display: none;
-      }
-      /* background-color: ligh; */
-      /* border: 2px solid black; */
-    }
-  }
 }
-
-#time-swap {
-  align-self: center;
-  font-weight: bold;
-  padding: 0.25em 0.5em;
-  margin-inline-start: 0.5em;
+.demon {
+  transform: scaleX(-1);
+  left: -50px;
+  bottom: 10px;
+  background-color: transparent;
 }
-#c {
-  z-index: -1;
-  top: 0;
-  left: 0;
-  border: 10px solid blue;
-  width: 100%;
-  overflow: hidden;
-  position: absolute;
+.ghost {
+  width: 460px;
+}
+.hound {
+  width: 160px;
+  left: 72px;
+  bottom: 0;
+}
+.skull {
+  width: 64px;
+  bottom: 96px;
+  left: 200px;
 }
