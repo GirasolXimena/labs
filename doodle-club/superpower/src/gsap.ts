@@ -21,7 +21,8 @@ const handleClick = (e: Event) => {
   if(!audioEl) {
     console.log('new audio')
     audioEl = new Audio
-    audioEl.setAttribute("src", "assets/audio.mp3")
+    audioEl.crossOrigin = ""
+    audioEl.setAttribute("src", "https://assets.codepen.io/3862739/superpower-audio.mp3")
     audioAnalyzer = new AudioMotionAnalyzer(undefined, {
       source: audioEl,
       bgAlpha: 0,

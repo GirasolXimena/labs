@@ -20,7 +20,7 @@ function main() {
 
   const loader = new THREE.TextureLoader();
   loader.load(
-    "./assets/liminal.jpg",
+    "https://assets.codepen.io/3862739/liminal.jpg",
     function (texture) {
       scene.background = texture;
     }

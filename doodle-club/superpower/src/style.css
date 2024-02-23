@@ -22,7 +22,7 @@ body {
   height: 512px;
   width: 512px;
   border: double 48px darkcyan;
-  background-image: url(./assets/background.png);
+  background-image: url(https://assets.codepen.io/3862739/superpower-background.png);
   background-clip: content-box;
   background-size: auto 100%;
   background-position-y: bottom;
