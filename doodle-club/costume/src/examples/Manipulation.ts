@@ -1,4 +1,4 @@
-import Matter, { IEventTimestamped, Engine as IEngine } from "matter-js";
+import Matter from "matter-js";
 const {
   Bodies,
   Body,
