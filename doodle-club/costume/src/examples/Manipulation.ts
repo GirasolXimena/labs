@@ -86,9 +86,8 @@ class Manipulation {
       scaleRate = 0.6;
       
 
-    Events.on(this.engine, "beforeUpdate", function (event: IEventTimestamped<IEngine>) {
-      // @ts-expect-error
-      const timeScale = (event?.delta ?? 1000 / 60) / 1000;
+    Events.on(this.engine, "beforeUpdate", function (event) {
+      const timeScale = (event.delta ?? 1000 / 60) / 1000;
       
       if (scaleRate > 0) {
         Body.scale(bodyF, 1 + scaleRate * timeScale, 1 + scaleRate * timeScale);
