@@ -1,0 +1,9 @@
+#c, #c2 {
+  border: 5px solid red;
+  /* height: 34px; */
+  /* width: 50px; */
+}
+
+#c2 {
+  border-color: blue;
+}
