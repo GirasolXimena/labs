@@ -1,11 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Superpower</title>
+    </head>
 
-:root {
+    <body>
+        <audio src=""></audio>
+        <h1 id="title">투명 인간</h1>
+        <p>
+매일 집을 나서기 전마다
+습한 화장실 거울에
+네게 하고 싶은 말을
+써놓곤 했었지
+아마 넌
+못 본 것 같아
+          
+투명인간 같아 난
+(안 보이나 봐)
+          </p>
+        <canvas id="canvas"></canvas>
+        <script src="./script.ts"></script>
+    </body>
+</html>
+<style>
+* {
   --gradient: repeating-linear-gradient(black 0px, black 30px, darkcyan 30px, darkcyan 60px, black 60px);
 }
-* {
-  box-sizing: border-box;
-}
+
 html {
   height: 100vh;
   width: 100vw;
@@ -35,7 +57,6 @@ body {
     background-color: black;
     background-image: var(--gradient);
     background-repeat: repeat-y;
-    /* background-repeat: no-repeat; */
     background-size: 100% 60px;
     background-position-y: top;
     animation: slide 8s linear infinite;
@@ -43,11 +64,10 @@ body {
 
   &::after {
     content: "";
-    mask-image: url('/assets/avatar.png');
+    mask-image: url('https://assets.codepen.io/3862739/avatar-invisible.png');
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
-    background-color: aliceblue;
     height: 75%;
     width: 50%;
     animation-direction: reverse;
@@ -68,8 +88,8 @@ h1, p {
   opacity: 0.5;
   color: white;
   background-clip: text;
-  /* mix-blend-mode: overlay; */
 }
+
 h1 {
   font-weight: bolder;
 
@@ -98,3 +118,4 @@ canvas {
   z-index: 100;
   transform: translate(-50%, -50%);
 }
+</style>

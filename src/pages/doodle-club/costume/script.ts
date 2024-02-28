@@ -14,8 +14,9 @@ const {
   Composites,
 } = Matter;
 
-const height = 600,
-  width = 800;
+const aspectRatio = 3 / 4
+const width = 800
+const height = width * aspectRatio
 
 class Scene {
   private engine: Matter.Engine;
@@ -24,7 +25,9 @@ class Scene {
   private canvas: HTMLCanvasElement;
   private world: Matter.World;
 
-  constructor() {
+  constructor({ height = 600, width = 800 }) {
+    this.height = height;
+    this.width = width
     this.engine = Engine.create();
     this.world = this.engine.world;
     this.canvas = document.body.querySelector("#c") as HTMLCanvasElement;
@@ -34,8 +37,8 @@ class Scene {
       canvas: this.canvas,
       engine: this.engine,
       options: {
-        width: 800,
-        height: 600,
+        width: width,
+        height: height,
       },
     });
 
@@ -226,4 +229,7 @@ class Scene {
   static for = ">=0.14.2";
 }
 
-new Scene();
+new Scene({
+  height,
+  width
+});

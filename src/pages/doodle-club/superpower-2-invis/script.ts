@@ -6,9 +6,8 @@ let audioAnalyzer: undefined | AudioMotionAnalyzer;
 const canvasEl = document.getElementById('canvas') as HTMLCanvasElement
 
 
-const handleClick = (e: Event) => {
+const handleClick = () => {
   if(!audioEl) {
-    console.log('new audio')
     audioEl = new Audio
     audioEl.crossOrigin = ""
     audioEl.setAttribute("src", "https://assets.codepen.io/3862739/invisible.mp3")
@@ -43,8 +42,6 @@ const handleClick = (e: Event) => {
 
   audioAnalyzer.gradient = 'myGradient'
   }
-
-
 
   const isUnplayed = isNaN(audioEl.duration)
   const isPaused = !!audioEl.duration && audioEl.paused
