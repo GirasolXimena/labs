@@ -27,7 +27,8 @@
 			"extensions": [
 				"ritwickdey.LiveServer",
 				"vunguyentuan.vscode-postcss",
-				"sleistner.vscode-fileutils"
+				"sleistner.vscode-fileutils",
+				"astro-build.astro-vscode"
 			]
 		}
 	}
