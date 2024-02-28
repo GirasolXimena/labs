@@ -1,0 +1,163 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medusa</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main>
+    <audio id="audio" src="https://assets.codepen.io/3862739/medusa.mp3" crossorigin="anonymous"></audio>
+  
+    <div id="container">
+      <h1 class="color-burn">Medusa</h1>
+      <canvas id="c" data-gradient="wrapper" data-multx="2" data-multy="2" data-hue="180" data-brightness=".8" data-mouse="-1" data-scale="1" data-scale2="3" data-noise="1.5" data-time=".2" data-bw=".0" data-bw2=".5" data-red="0.00" data-green="0.33" data-blue="0.88" data-red2="1.00" data-green2="0.0" data-blue2="0.0" data-callback="true">
+      </canvas>
+      <canvas id="canvas">
+      </canvas>
+      
+      <img class="color-lighten" id="hair" src="https://assets.codepen.io/3862739/hair.png" alt="hair">
+      <img id="outline" src="https://assets.codepen.io/3862739/outline.png" alt="outline">
+      <img class="color-burn" id="dress" src="https://assets.codepen.io/3862739/skirt.png" alt="dress">
+      <img id="shirt" src="https://assets.codepen.io/3862739/shirt.png" alt="shirt">
+      <img id="arm" src="https://assets.codepen.io/3862739/arm.png" alt="arm">
+      <img id="face" src="https://assets.codepen.io/3862739/face.png" alt="face">
+      <img id="squat" src="https://assets.codepen.io/3862739/squat.png" alt="">
+    </div>
+    <script src="./script.js"></script>
+  </main>
+</body>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  canvas {
+    display: block;
+  }
+  #c {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  #content {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .placeh {
+    border: 2px solid white;
+    margin: 10vw;
+    width: 300px;
+    height: 300px;
+  }
+  @font-face {
+    font-family: something-unfriendly;
+    src: url(https://assets.codepen.io/3862739/something-unfriendly-210bb597.otf);
+    font-weight: 700;
+    font-style: normal;
+    font-display: block;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    height: 100vh;
+    background: radial-gradient(circle at center, rgb(70, 1, 1) 33%, black);
+  }
+  h1 {
+    position: absolute;
+    font-family: something-unfriendly;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    text-transform: uppercase;
+    background-color: #fff;
+    color: #000;
+    font-size: 1.25em;
+    letter-spacing: -0.8em;
+    padding: 1em 0;
+    line-height: 1.5em;
+    left: 20%;
+    top: 0;
+    z-index: 20;
+    padding-block: 0.5em;
+    padding-inline: 2.2em;
+  }
+  main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 87%;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .color-burn {
+    mix-blend-mode: lighten;
+  }
+  .color-lighten {
+    mix-blend-mode: difference;
+  }
+  #container {
+    background-color: #000;
+    cursor: pointer;
+    position: relative;
+    border: 1.5em double red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 700px;
+    width: 600px;
+  }
+  #canvas,
+  #viz {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 87%;
+    transform: translate(-50%, -50%);
+  }
+  #c {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    border: 2.7em solid black;
+  }
+  #canvas {
+    -webkit-mask-image: url(https://assets.codepen.io/3862739/medusa-outline_1.png);
+    mask-image: url(https://assets.codepen.io/3862739/medusa-outline_1.png);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+  #squat {
+    display: none;
+  }
+  #outline {
+    z-index: 1;
+  }
+</style>

@@ -26,7 +26,8 @@
 				"ritwickdey.LiveServer",
 				"vunguyentuan.vscode-postcss",
 				"sleistner.vscode-fileutils",
-				"astro-build.astro-vscode"
+				"astro-build.astro-vscode",
+				"esbenp.prettier-vscode"
 			]
 		}
 	}

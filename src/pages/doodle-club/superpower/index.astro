@@ -1,0 +1,102 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superpower</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <script type="module" src="gsap.ts"></script>
+  <img
+    src="https://assets.codepen.io/3862739/run-right.png"
+    alt=""
+    class="ofelia ofelia-running"
+  />
+  <img
+    src="https://assets.codepen.io/3862739/demon-idle.gif"
+    class="demon"
+    alt=""
+  />
+  <img
+    src="https://assets.codepen.io/3862739/ghost-idle.gif"
+    class="demon ghost"
+    alt=""
+  />
+  <img
+    src="https://assets.codepen.io/3862739/hell-hound-walk.gif"
+    class="demon hound"
+    alt=""
+  />
+  <img
+    src="https://assets.codepen.io/3862739/fire-skull.gif"
+    class="demon skull"
+    alt=""
+  />
+  <script src="./script.ts"></script>
+</body>
+<style>
+  html {
+    background-color: plum;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+  canvas {
+    margin: auto;
+  }
+
+  .ofelia {
+    width: 76px;
+    height: 88px;
+    object-fit: cover;
+    object-position: left center;
+    right: 180px;
+  }
+
+  body {
+    position: relative;
+    height: 512px;
+    width: 512px;
+    border: double 48px darkcyan;
+    background-image: url(https://assets.codepen.io/3862739/superpower-background.png);
+    background-clip: content-box;
+    background-size: auto 100%;
+    background-position-y: bottom;
+    background-position-x: 0px;
+    background-repeat: repeat-x;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: end;
+  }
+
+  img {
+    margin: 0px;
+    padding: 1px;
+    position: absolute;
+  }
+
+  .demon {
+    transform: scaleX(-1);
+    left: -50px;
+    bottom: 10px;
+    background-color: transparent;
+  }
+
+  .ghost {
+    width: 460px;
+  }
+
+  .hound {
+    width: 160px;
+    left: 72px;
+    bottom: 0;
+  }
+
+  .skull {
+    width: 64px;
+    bottom: 96px;
+    left: 200px;
+  }
+</style>

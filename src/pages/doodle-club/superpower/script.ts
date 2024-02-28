@@ -77,7 +77,7 @@ const handleMouse = ({ clientX }) => {
 
   }
   if(audioEl) {
-    audioEl.playbackRate = cartesianX
+    // audioEl.playbackRate = cartesianX
   }
 }
 
